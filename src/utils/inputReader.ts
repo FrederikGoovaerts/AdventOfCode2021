@@ -1,5 +1,7 @@
 import * as fs from "fs";
 
-export const asList = (): string[] =>
-  fs.readFileSync("input", "utf8").split("\n");
-export const asNumberList = (): number[] => asList().map(Number);
+export const asList = (fileName: string = "input"): string[] =>
+  fs.readFileSync(fileName, "utf8").trim().split("\n");
+
+export const asNumberList = (fileName: string = "input"): number[] =>
+  asList(fileName).map(Number);
