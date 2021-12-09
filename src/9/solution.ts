@@ -5,14 +5,7 @@ const width = input[0].length;
 const height = input.length;
 
 function getNeighbours(x: number, y: number): number[] {
-  const result = [
-    input[x - 1]?.[y],
-    input[x]?.[y - 1],
-    input[x + 1]?.[y],
-    input[x]?.[y + 1],
-  ];
-
-  return result.filter((val) => val !== undefined);
+  return getNeighboursLocs(x, y).map((val) => input[val[0]][val[1]]);
 }
 
 function getNeighboursLocs(x: number, y: number): [number, number][] {
