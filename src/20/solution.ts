@@ -58,11 +58,13 @@ function doAlgo(): void {
   // Stash locally so we can update these during the algo for next run
   const [cMinX, cMaxX, cMinY, cMaxY] = [minX, maxX, minY, maxY];
 
+  // Extra padding for "the catch"
   for (let y = cMinY - 4; y <= cMaxY + 4; y++) {
     for (let x = cMinX - 4; x <= cMaxX + 4; x++) {
       let bitString = "";
       for (const pixY of [y - 1, y, y + 1]) {
         for (const pixX of [x - 1, x, x + 1]) {
+          // "The catch" in action, automatically substitute the infinite values
           if (
             algo[0] === 1 &&
             (x < cMinX - 1 || x > cMaxX + 1 || y < cMinY - 1 || y > cMaxY + 1)
@@ -76,8 +78,9 @@ function doAlgo(): void {
       const litVal = algo[parseInt(bitString, 2)];
       if (litVal === 1) {
         newLit.add(serPix(x, y));
-        const clampedX = Math.max(Math.min(x, cMaxX + 2), cMinX - 2);
-        const clampedY = Math.max(Math.min(y, cMaxY + 2), cMinY - 2);
+        // Solution should only max grow one per algorithm call (flipping of infinity not kept in mind)
+        const clampedX = Math.max(Math.min(x, cMaxX + 1), cMinX - 1);
+        const clampedY = Math.max(Math.min(y, cMaxY + 1), cMinY - 1);
         handleBounds(clampedX, clampedY);
       }
     }
